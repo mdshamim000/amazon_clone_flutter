@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:amazon_clone_flutter/consts/errorHandler.dart';
 import 'package:amazon_clone_flutter/consts/global_var.dart';
 import 'package:amazon_clone_flutter/consts/utils.dart';
@@ -30,12 +32,32 @@ class AuthService {
           response: res,
           context: context,
           onSuccess: () {
-            showSnackBar(
-                context, "Account Crteated! \n Login with same account");
+            showSnackBar(context, "Account Crteated!\n Login Now..");
           });
     } catch (e) {
       showSnackBar(context, e.toString());
     }
   }
 
+  void signIn({
+    required BuildContext context,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      http.Response res = await http.post(Uri.parse('$uri/api/signin'),
+          body: jsonEncode({"email": email, "password": password}),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8'
+          });
+      httpErrorHandler(
+          response: res,
+          context: context,
+          onSuccess: () {
+            showSnackBar(context, "Signed In...");
+          });
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
 }

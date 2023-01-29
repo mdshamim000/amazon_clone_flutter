@@ -16,7 +16,7 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  AuthEn _auth = AuthEn.signup; 
+  AuthEn _auth = AuthEn.signup;
   final AuthService _authService = AuthService();
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
@@ -24,7 +24,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
- 
+
   void signup() {
     _authService.signUp(
         context: context,
@@ -32,9 +32,15 @@ class _AuthScreenState extends State<AuthScreen> {
         password: _passwordController.text,
         name: _nameController.text);
   }
- void signin(){
-  
- }
+
+  void signin() {
+    _authService.signIn(
+      context: context,
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -140,7 +146,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           text: 'Sign In',
                           onTap: () {
                             if (_signInFormKey.currentState!.validate()) {
-                              // signInUser();
+                              signin();
                             }
                           },
                         )
