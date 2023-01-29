@@ -1,3 +1,4 @@
+import 'package:amazon_clone_flutter/pages/auth/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -15,14 +16,25 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  AuthEn _auth = AuthEn.signup;
+  AuthEn _auth = AuthEn.signup; 
+  final AuthService _authService = AuthService();
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-
+ 
+  void signup() {
+    _authService.signUp(
+        context: context,
+        email: _emailController.text,
+        password: _passwordController.text,
+        name: _nameController.text);
+  }
+ void signin(){
+  
+ }
   @override
   void dispose() {
     super.dispose();
@@ -84,7 +96,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           text: 'Sign Up',
                           onTap: () {
                             if (_signUpFormKey.currentState!.validate()) {
-                              // signUpUser();
+                              signup();
                             }
                           },
                         )
