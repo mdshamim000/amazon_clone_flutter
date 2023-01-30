@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+ 
 
+String uriAndroid = 'http://10.0.2.2:3000'; //android localhost
 String uri = 'http://0.0.0.0:3000';
+
 
 class GlobalVariables {
   static const appBarGradient = LinearGradient(
