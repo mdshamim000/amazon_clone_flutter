@@ -13,12 +13,15 @@ void httpErrorHandler(
       onSuccess();
       break;
     case 400:
-      showSnackBar(context, jsonDecode(response.body)['msg']);
+      showToast(jsonDecode(response.body)['msg']);
+      break;
+    case 401:
+      showToast(jsonDecode(response.body)['msg']);
       break;
     case 500:
-      showSnackBar(context, jsonDecode(response.body)['error']);
+      showToast(jsonDecode(response.body)['error']);
       break;
     default:
-      showSnackBar(context, response.body);
+      showToast(response.body.toString());
   }
 }

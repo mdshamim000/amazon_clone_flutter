@@ -5,8 +5,9 @@ import 'package:amazon_clone_flutter/consts/errorHandler.dart';
 import 'package:amazon_clone_flutter/consts/global_var.dart';
 import 'package:amazon_clone_flutter/consts/utils.dart';
 import 'package:amazon_clone_flutter/models/user.dart';
-import 'package:amazon_clone_flutter/pages/home/home_screen.dart';
+import 'package:amazon_clone_flutter/pages/auth/screens/authscreen.dart';
 import 'package:amazon_clone_flutter/providers/user_provider.dart';
+import 'package:amazon_clone_flutter/res/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -29,7 +30,10 @@ class AuthService {
           type: '',
           token: '');
 
-      http.Response res = await http.post(Uri.parse('$uri/api/signup'),
+      http.Response res = await http.post(
+      Uri.parse((Platform.isAndroid)
+              ? '$uriAndroid/api/signup'
+              : '$uri/api/signup'),
           body: user.toJson(),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8'
@@ -38,10 +42,10 @@ class AuthService {
           response: res,
           context: context,
           onSuccess: () {
-            showSnackBar(context, "Account Crteated!\n Login Now..");
+            showToast("Account Crteated!\n Login Now..");
           });
     } catch (e) {
-      showSnackBar(context, e.toString());
+      showToast(e.toString());
     }
   }
 
@@ -63,7 +67,7 @@ class AuthService {
           response: res,
           context: context,
           onSuccess: () async {
-            showSnackBar(context, "Signed In...");
+            showToast("Signed In...");
             Provider.of<UserProvider>(context, listen: false).setUser(res.body);
             SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -71,10 +75,10 @@ class AuthService {
                 'x-auth-token', jsonDecode(res.body)['token']);
 
             Navigator.pushNamedAndRemoveUntil(
-                context, HomeScreen.routeName, (route) => false);
+                context, BottomBar.routeName, (route) => false);
           });
     } catch (e) {
-      showSnackBar(context, e.toString());
+      showToast(e.toString());
     }
   }
 
@@ -87,13 +91,13 @@ class AuthService {
 
       if (token == null) {
         prefs.setString('x-auth-token', '');
+       
       }
 
       var tokenRes = await http.post(
           Uri.parse((Platform.isAndroid)
               ? '$uriAndroid/tokenIsValid'
               : '$uri/tokenIsValid'),
-          // body: jsonEncode({}),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': token!
@@ -106,12 +110,20 @@ class AuthService {
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'x-auth-token': token
-            }); 
-        var userProvider = Provider.of<UserProvider>(context, listen: false);
-        userProvider.setUser(userRes.body);
+            });
+        httpErrorHandler(
+            response: userRes,
+            context: context,
+            onSuccess: () async {
+              var userProvider =
+                  Provider.of<UserProvider>(context, listen: false);
+              userProvider.setUser(userRes.body);
+            });
       }
     } catch (e) {
-      showSnackBar(context, e.toString());
+      showToast(e.toString());
+       Navigator.pushNamedAndRemoveUntil(
+        context, AuthScreen.routeName, (route) => false);
     }
   }
 }

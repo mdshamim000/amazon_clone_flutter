@@ -1,7 +1,5 @@
 import 'package:amazon_clone_flutter/pages/auth/services/auth_service.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart'; 
 
 import '../../../res/widgets/cust_button.dart';
 import '../../../consts/global_var.dart';
@@ -57,12 +55,12 @@ class _AuthScreenState extends State<AuthScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Text(
+              const Text(
                 "Welcome",
                 style: TextStyle(fontSize: 22),
               ),
               ListTile(
-                title: Text(
+                title: const Text(
                   'Create Account',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
@@ -111,7 +109,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 ),
               ListTile(
-                title: Text(
+                title: const Text(
                   'Sign-In',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),

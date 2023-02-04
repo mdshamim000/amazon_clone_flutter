@@ -1,13 +1,13 @@
 import 'package:amazon_clone_flutter/consts/global_var.dart';
 import 'package:amazon_clone_flutter/pages/auth/screens/authscreen.dart';
 import 'package:amazon_clone_flutter/pages/auth/services/auth_service.dart';
-import 'package:amazon_clone_flutter/pages/home/home_screen.dart';
 import 'package:amazon_clone_flutter/providers/user_provider.dart';
+import 'package:amazon_clone_flutter/res/widgets/bottom_bar.dart';
 import 'package:amazon_clone_flutter/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async {
   runApp(MultiProvider(
       providers: [ChangeNotifierProvider(create: (context) => UserProvider())],
       child: const MyApp()));
@@ -25,12 +25,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    authService.getUserData(context: context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    authService.getUserData(context: context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -42,8 +43,8 @@ class _MyAppState extends State<MyApp> {
           iconTheme: IconThemeData(color: Colors.black),
         ),
       ),
-      home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const HomeScreen()
+      home: Provider.of<UserProvider>(context).user.token != ' '
+          ? const BottomBar()
           : const AuthScreen(),
       onGenerateRoute: ((settings) => generateRoute(settings)),
     );
