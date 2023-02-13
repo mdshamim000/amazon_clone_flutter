@@ -1,4 +1,5 @@
 import 'package:amazon_clone_flutter/consts/global_var.dart';
+import 'package:amazon_clone_flutter/pages/account/account_screen.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class _BottomBarState extends State<BottomBar> {
   int _page = 0;
   double bottomWidth = 42;
   double bottomBorderWidth = 6;
- 
+
   updatePage(int page) {
     setState(() {
       _page = page;
@@ -25,7 +26,7 @@ class _BottomBarState extends State<BottomBar> {
 
   List<Widget> pages = [
     const HomeScreen(),
-    const HomeScreen(),
+    const AccountScreen(),
     const HomeScreen(),
   ];
   @override
@@ -46,41 +47,40 @@ class _BottomBarState extends State<BottomBar> {
           label: '');
     }
 
-    return  Scaffold(
-        body: pages[_page],
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _page,
-          selectedItemColor: GlobalVariables.selectedNavBarColor,
-          unselectedItemColor: GlobalVariables.unselectedNavBarColor,
-          backgroundColor: GlobalVariables.backgroundColor,
-          iconSize: 28,
-          onTap: updatePage,
-          items: <BottomNavigationBarItem>[
-            bottomItem(0, Icons.home),
-            bottomItem(1, Icons.person_outline),
-            BottomNavigationBarItem(
-                icon: Container(
-                  width: bottomWidth,
-                  decoration: BoxDecoration(
-                      border: Border(
-                          top: BorderSide(
-                              width: bottomBorderWidth,
-                              color: _page == 2
-                                  ? GlobalVariables.selectedNavBarColor
-                                  : Colors.transparent))),
-                  child: const badges.Badge(
-                      badgeContent: Text('11'),
-                      badgeStyle: badges.BadgeStyle(
-                        badgeColor: Colors.white,
-                        elevation: 0,
-                      ),
-                      child: Icon(Icons.shopping_cart_outlined)),
-                ),
-                label: ''),
-            //  bottomItem(3, Icons.menu)
-          ],
-        ),
-    
+    return Scaffold(
+      body: pages[_page],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _page,
+        selectedItemColor: GlobalVariables.selectedNavBarColor,
+        unselectedItemColor: GlobalVariables.unselectedNavBarColor,
+        backgroundColor: GlobalVariables.backgroundColor,
+        iconSize: 28,
+        onTap: updatePage,
+        items: <BottomNavigationBarItem>[
+          bottomItem(0, Icons.home),
+          bottomItem(1, Icons.person_outline),
+          BottomNavigationBarItem(
+              icon: Container(
+                width: bottomWidth,
+                decoration: BoxDecoration(
+                    border: Border(
+                        top: BorderSide(
+                            width: bottomBorderWidth,
+                            color: _page == 2
+                                ? GlobalVariables.selectedNavBarColor
+                                : Colors.transparent))),
+                child: const badges.Badge(
+                    badgeContent: Text('11'),
+                    badgeStyle: badges.BadgeStyle(
+                      badgeColor: Colors.white,
+                      elevation: 0,
+                    ),
+                    child: Icon(Icons.shopping_cart_outlined)),
+              ),
+              label: ''),
+          //  bottomItem(3, Icons.menu)
+        ],
+      ),
     );
   }
 }

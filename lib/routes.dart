@@ -1,4 +1,4 @@
-import 'package:amazon_clone_flutter/pages/auth/screens/account_screen.dart';
+import 'package:amazon_clone_flutter/pages/account/account_screen.dart';
 import 'package:amazon_clone_flutter/pages/auth/screens/authscreen.dart';
 import 'package:amazon_clone_flutter/pages/home/home_screen.dart';
 import 'package:amazon_clone_flutter/res/widgets/bottom_bar.dart';

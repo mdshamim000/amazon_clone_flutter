@@ -122,8 +122,8 @@ class AuthService {
       }
     } catch (e) {
       showToast(e.toString());
-       Navigator.pushNamedAndRemoveUntil(
-        context, AuthScreen.routeName, (route) => false);
+      //  Navigator.pushNamed(
+      //   context, AuthScreen.routeName);
     }
   }
 }
